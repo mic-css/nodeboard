@@ -2,11 +2,11 @@ var mongoose = require('mongoose'),
 Schema = mongoose.Schema;
 
 var taskSchema = new Schema({
-  title: String,
-  created: Date,
+  title: { type: String, required: "Title cannot be empty" },
+  created: { type: Date, required: true },
   dueDate: Date,
   importance: { type: Number, min: 1, max: 3, default: 1},
-  completed: {type: Boolean, default: false}
+  completed: { type: Boolean, default: false }
 });
 
-module.exports= mongoose.model('Task', taskSchema);
+module.exports = mongoose.model('Task', taskSchema);
