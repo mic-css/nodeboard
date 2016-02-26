@@ -51,22 +51,27 @@ describe('Create a task', function(){
     });
   });
 
-  it('returns an error if the object is not saved to the db', function (done) {
+  describe('if given an invalid request', function () {
     var invalidTask = {
       'invalid': 'true'
     };
 
-    chai.request(server)
-    .post('/tasks')
-    .send(invalidTask)
-    .end(function (err, res) {
-      res.should.have.status(400);
-      res.body.should.have.property('ERROR');
-      done();
+    it('returns a 400 error', function (done) {
+      chai.request(server)
+      .post('/tasks')
+      .send(invalidTask)
+      .end(function (err, res) {
+        res.should.have.status(400);
+        res.body.should.have.property('ERROR');
+        done();
+      });
     });
-  });
 
-  it('does not write the object to the db', function () {
-
+    it('does not write the object to the db', function (done) {
+      chai.request(server)
+      .post('/tasks')
+      .send(invalidTask);
+      Tasks.find().count().should.equal(0);
+    });
   });
 });
