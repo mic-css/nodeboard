@@ -12,8 +12,6 @@ var expect = chai.expect;
 chai.use(chaiHttp);
 
 describe('Create a task', function () {
-  var createdDate;
-  var dueDate;
   var newTask;
 
   Task.collection.drop();
@@ -26,7 +24,7 @@ describe('Create a task', function () {
   beforeEach(function (done) {
     newTask = new Task({
        title: 'Feed the dinosaur',
-       dueDate: dueDate = new Date(2016, 02, 26),
+       dueDate: new Date(2016, 02, 26),
        importance: 3
      });
      done();
@@ -45,14 +43,14 @@ describe('Create a task', function () {
         res.body.SUCCESS.should.be.a('object');
         res.body.SUCCESS.should.have.property('_id');
         res.body.SUCCESS.should.have.property('title');
-        res.body.SUCCESS.title.should.equal('Feed the dinosaur');
+        res.body.SUCCESS.title.should.equal(newTask.title);
         res.body.SUCCESS.should.have.property('created');
         res.body.SUCCESS.should.have.property('dueDate');
-        res.body.SUCCESS.dueDate.should.equal(dueDate.toISOString());
+        res.body.SUCCESS.dueDate.should.equal(newTask.dueDate.toISOString());
         res.body.SUCCESS.should.have.property('importance');
-        res.body.SUCCESS.importance.should.equal(3);
+        res.body.SUCCESS.importance.should.equal(newTask.importance);
         res.body.SUCCESS.should.have.property('completed');
-        res.body.SUCCESS.completed.should.equal(false);
+        res.body.SUCCESS.completed.should.equal(newTask.completed);
         done();
       });
     });
