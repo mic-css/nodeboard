@@ -11,8 +11,7 @@ var should = chai.should();
 var expect = chai.expect;
 chai.use(chaiHttp);
 
-describe('Create a task', function(){
-
+describe('Create a task', function () {
   var createdDate;
   var dueDate;
   var newTask;
@@ -25,59 +24,54 @@ describe('Create a task', function(){
   });
 
   beforeEach(function (done) {
-  newTask  = new Task({
-     title: 'Feed the dinosaur',
-     dueDate: dueDate = new Date(2016, 02, 26),
-     importance: 3
-   });
-   done();
-  })
-
-describe('if given a valid task', function(){
-
-  it('returns a success message with the posted object', function (done) {
-    chai.request(server)
-    .post('/tasks')
-    .send(newTask)
-    .end(function(err, res){
-      res.should.have.status(201);
-      res.should.be.json;
-      res.body.should.be.a('object');
-      res.body.should.have.property('SUCCESS');
-      res.body.SUCCESS.should.be.a('object');
-      res.body.SUCCESS.should.have.property('_id');
-      res.body.SUCCESS.should.have.property('title');
-      res.body.SUCCESS.title.should.equal('Feed the dinosaur');
-      res.body.SUCCESS.should.have.property('created');
-      res.body.SUCCESS.should.have.property('dueDate');
-      res.body.SUCCESS.dueDate.should.equal(dueDate.toISOString());
-      res.body.SUCCESS.should.have.property('importance');
-      res.body.SUCCESS.importance.should.equal(3);
-      res.body.SUCCESS.should.have.property('completed');
-      res.body.SUCCESS.completed.should.equal(false);
-      done();
-    });
+    newTask = new Task({
+       title: 'Feed the dinosaur',
+       dueDate: dueDate = new Date(2016, 02, 26),
+       importance: 3
+     });
+     done();
   });
 
-  it('writes the object to the db', function (done) {
-    chai.request(server)
-    .post('/tasks')
-    .send(newTask)
-    .end(function (err, res) {
-    Task.count(function (err, count) {
-      count.should.equal(1);
-    })
-      Task.find(function (err, tasks) {
-        tasks[0].title.should.equal(newTask.title);
-
+  describe('if given a valid task', function(){
+    it('returns a success message with the posted object', function (done) {
+      chai.request(server)
+      .post('/tasks')
+      .send(newTask)
+      .end(function(err, res){
+        res.should.have.status(201);
+        res.should.be.json;
+        res.body.should.be.a('object');
+        res.body.should.have.property('SUCCESS');
+        res.body.SUCCESS.should.be.a('object');
+        res.body.SUCCESS.should.have.property('_id');
+        res.body.SUCCESS.should.have.property('title');
+        res.body.SUCCESS.title.should.equal('Feed the dinosaur');
+        res.body.SUCCESS.should.have.property('created');
+        res.body.SUCCESS.should.have.property('dueDate');
+        res.body.SUCCESS.dueDate.should.equal(dueDate.toISOString());
+        res.body.SUCCESS.should.have.property('importance');
+        res.body.SUCCESS.importance.should.equal(3);
+        res.body.SUCCESS.should.have.property('completed');
+        res.body.SUCCESS.completed.should.equal(false);
         done();
+      });
     });
+
+    it('writes the object to the db', function (done) {
+      chai.request(server)
+      .post('/tasks')
+      .send(newTask)
+      .end(function (err, res) {
+        Task.count(function (err, count) {
+          count.should.equal(1);
+        });
+        Task.find(function (err, tasks) {
+          tasks[0].title.should.equal(newTask.title);
+        });
+        done();
+      });
     });
   });
-
-});
-
-
 
   describe('if given an invalid request', function () {
     var invalidTask = {

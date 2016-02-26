@@ -13,11 +13,12 @@ chai.use(chaiHttp);
 describe('Read all tasks', function(){
   var createdDate;
   var dueDate;
+  var newTask;
 
   Task.collection.drop();
 
   beforeEach(function (done) {
-    var newTask = new Task({
+    newTask = new Task({
       title: 'Feed the dinosaur',
       created: createdDate = new Date(),
       dueDate: dueDate = new Date(2016, 02, 26),
@@ -42,29 +43,16 @@ describe('Read all tasks', function(){
       res.body.should.be.a('array');
       res.body[0].should.have.property('_id');
       res.body[0].should.have.property('title');
-      res.body[0].title.should.equal('Feed the dinosaur');
+      res.body[0].title.should.equal(newTask.title);
       res.body[0].should.have.property('created');
-      res.body[0].created.should.equal(createdDate.toISOString());
+      res.body[0].created.should.equal(newTask.created.toISOString());
       res.body[0].should.have.property('dueDate');
-      res.body[0].dueDate.should.equal(dueDate.toISOString());
+      res.body[0].dueDate.should.equal(newTask.dueDate.toISOString());
       res.body[0].should.have.property('importance');
-      res.body[0].importance.should.equal(3);
+      res.body[0].importance.should.equal(newTask.importance);
       res.body[0].should.have.property('completed');
-      res.body[0].completed.should.equal(false);
+      res.body[0].completed.should.equal(newTask.completed);
       done();
     });
   });
-});
-
-
-it ('response with JSON including the specified task when there is a GET request to "/tasks/:id" where id is the task', function(){
-
-});
-
-it ('responds with json including the added object when there is a POST request to "/tasks" ', function(){
-
-});
-
-it ('responds with json including the object when there is a POST request to "/tasks/:id" where the object returned is the object', function(){
-
 });
