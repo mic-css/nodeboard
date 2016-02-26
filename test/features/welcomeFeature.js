@@ -9,6 +9,18 @@ var Task = require('../../models/taskModel');
 
 var should = chai.should();
 chai.use(chaiHttp);
+process.env.NODE_ENV = 'test';
+
+var chai = require('chai');
+var chaiHttp = require('chai-http');
+var mongoose = require('mongoose');
+
+var server = require('../../app');
+var Task = require('../../models/taskModel');
+
+var should = chai.should();
+chai.use(chaiHttp);
+
 
 describe ('Nodeboard', function() {
   var createdDate;
