@@ -4,9 +4,9 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "start-dev": "nodemon --debug ./bin/dev",
-    "start-test": "nodemon --debug ./bin/test",
-    "test": "grunt"
+    "dev-server": "nodemon --debug ./bin/dev",
+    "test-server": "nodemon --debug ./bin/test",
+    "tests": "grunt"
   },
   "dependencies": {
     "body-parser": "~1.13.2",
