@@ -12,9 +12,6 @@ router.route('/')
         res.json(tasks);
       }
     });
-  })
-  .post(function (req, res, next) {
-
   });
 
 module.exports = router;
