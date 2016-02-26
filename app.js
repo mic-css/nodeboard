@@ -20,8 +20,6 @@ mongoose.connect(config.mongoURI[app.settings.env], function(err, res) {
     } else {
     console.log('Connected to the Database: ' + config.mongoURI[app.settings.env]);
     }
-
-
 });
 
 
