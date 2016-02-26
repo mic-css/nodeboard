@@ -8,6 +8,7 @@ var server = require('../../app');
 var Task = require('../../models/taskModel');
 
 var should = chai.should();
+var expect = chai.expect;
 chai.use(chaiHttp);
 
 describe('Create a task', function(){
@@ -71,7 +72,10 @@ describe('Create a task', function(){
       chai.request(server)
       .post('/tasks')
       .send(invalidTask);
-      Tasks.find().count().should.equal(0);
+      Task.count(function (err, count) {
+        count.should.equal(0);
+        done();
+      });
     });
   });
 });
